@@ -15,7 +15,10 @@ Auth::routes([
   'reset'  => false
 ]);
 
-Route::redirect('/', '/bulletin');
+Route::redirect('/', '/bulletin')->name('home');
+
+Route::get('/contact', 'ContactController@index')->name('contact');
+Route::post('/contact', 'ContactController@sendMail')->name('send');
 
 Route::resource('bulletin', 'BulletinController')->except(['create', 'show']);
 Route::get('/bulletin/{bulletin}/delete', 'BulletinController@delete')->name('bulletin.delete');
@@ -45,6 +48,7 @@ Route::name('admin.')->group(function (){
 	Route::get('/admin/login', 'AdminController@showLoginForm')->name('login.form');
 	Route::post('/admin/login', 'AdminController@login')->name('login');
 	
-	Route::get('/admin', 'AdminController@dashboard')->name('dashboard');
+  Route::get('/admin', 'AdminController@dashboard')->name('dashboard');
+  Route::get('/admin/contact', 'AdminController@contact')->name('contact');
 	
 });

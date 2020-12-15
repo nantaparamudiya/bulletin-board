@@ -22,6 +22,7 @@
         @guest
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ route('contact') }}">Contact Us</a></li>
               <li><a href="{{ route('login') }}">Login</a></li>
               <li><a href="{{ route('register') }}">Register</a></li>
             </ul>
@@ -29,13 +30,13 @@
         @else
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ route('contact') }}">Contact Us</a></li>
               <li>
                 <form action="{{ route('logout') }}" method="post">
                   @csrf
                   <button type="submit" class="logout">Logout</button>
                 </form>
               </li>
-              <li><a href="{{ route('register') }}">Register</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         @endguest
