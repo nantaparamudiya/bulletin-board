@@ -7,37 +7,44 @@ use App\Mail\ContactMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactUsRequest;
 
 class ContactController extends Controller
 {
     private $app_email = 'example@example.com';
     private $app_name = 'Bulletin Board';
-    private $rules = [
-        'name'     => ['required'],
-        'email'    => ['required', 'email:rfc,dns'],
-        'text'  => ['required'],
-    ];
 
     public function index()
     {
         return view('contact');
     }
 
-    public function sendMail(Request $request)
+    public function sendMail(ContactUsRequest $request)
     {
-        $data = [
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'text' => $request->get('message')
-        ];
+        $data = $request->validated();
 
-        $validator = Validator::make($data, $this->rules);
+        unset($data['g-recaptcha-response']);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        $contact = new Contact;
+
+        if (! isset($data['name'])) {
+            $contact->setFullNameAttribute($data);
+
+            unset($data['first_name']);
+            unset($data['last_name']);
+        } else {
+            $contact->name = $data['name'];
         }
+
+        $contact->phone = $data['phone'];
+        $contact->email = $data['email'];
+        $contact->body = $data['body'];
+        $contact->save();
+
+        $userContact = Contact::find($contact->id);
+
+        $data['name'] = $userContact->name;
 
         Mail::send("emails.mail", $data, function ($message) use ($request){
             $message->to($request->email, $request->name);

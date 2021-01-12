@@ -74,6 +74,52 @@
                 <div class="box-header with-border">
                 <h1 class="font-18 m-0">Timedoor Challenge</h1>
                 </div>
+                <form method="" action="">
+                <div class="box-body">
+                    <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                        <th>
+                            <input type="checkbox" id="check-all">
+                        </th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Body</th>
+                        <th width="50">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Foreach -->
+                        @foreach ($contacts as $contact)
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>{{ $contact->id }}</td>
+                            <td>{{ $contact->name }}</td>
+                            <td>{{ $contact->phone }}</td>
+                            <td>{{ $contact->email }}</td>
+                            <td>{{ $contact->body }}</td>
+                            <td><a href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger" rel="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        @endforeach
+                        <!-- End Foreach -->
+                    </tbody>
+                    </table>
+                    <a href="#" class="btn btn-default mt-5" data-toggle="modal" data-target="#deleteModal">Delete Checked Items</a>
+                    <div class="text-center">
+                    <!-- Pagination -->
+                    <div class="text-center mt-30">
+                        <nav>
+                            {{ $contacts->links() }}
+                        </nav>
+                    </div>
+                    </div>
+                </div>
+                </form>
             </div>
             </div>
             <!-- /.col-xs-12 -->

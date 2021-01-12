@@ -84,8 +84,13 @@
                 </div>
               @else
                 <div class="form-group">
-                  <label>Name</label>
-                  <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                  <label>First Name</label>
+                  <input type="text" name="first_name" class="form-control" value="{{ old('first_name') }}">
+                </div>
+
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" name="last_name" class="form-control" value="{{ old('last_name') }}">
                 </div>
 
                 <div class="form-group">
@@ -95,9 +100,20 @@
               @endauth
 
               <div class="form-group">
-                <label>Message</label>
-                <textarea rows="5" name="message" class="form-control">{{ old('message') }}</textarea>
+                <label>Phone</label>
+                <input type="telp" name="phone" class="form-control" value="{{ old('phone') }}">
               </div>
+
+              <div class="form-group">
+                <label>Body</label>
+                <textarea rows="5" name="body" class="form-control">{{ old('body') }}</textarea>
+              </div>
+
+              @if(env('GOOGLE_RECAPTCHA_KEY'))
+                  <div class="g-recaptcha"
+                        data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
+                  </div>
+              @endif
 
               <div class="text-center mt-30 mb-30">
                 <button class="btn btn-primary">Submit</button>

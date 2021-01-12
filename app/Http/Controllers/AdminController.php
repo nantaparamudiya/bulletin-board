@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -43,5 +44,11 @@ class AdminController extends Controller
     public function dashboard()
     {
     	return view('admin.index');
-    }
+	}
+	
+	public function contact()
+	{
+		$contacts = Contact::orderBy('id', 'asc')->paginate(10);
+		return view('admin.contact', compact('contacts'));
+	}
 }
