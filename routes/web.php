@@ -17,6 +17,8 @@ Auth::routes([
 
 Route::redirect('/', '/bulletin')->name('home');
 
+Route::resource('gallery', 'GalleryController');
+
 Route::get('/contact', 'ContactController@index')->name('contact');
 Route::post('/contact', 'ContactController@sendMail')->name('send');
 
@@ -51,4 +53,14 @@ Route::name('admin.')->group(function (){
   Route::get('/admin', 'AdminController@dashboard')->name('dashboard');
   Route::get('/admin/contact', 'AdminController@contact')->name('contact');
 	
+});
+
+Route::get('locale/{locale}', function ($locale){
+  Session::put('locale', $locale);
+
+  if (request()->fullUrl() === redirect()->back()->getTargetUrl()) {
+    return redirect('/');
+  }
+
+  return redirect()->back();
 });

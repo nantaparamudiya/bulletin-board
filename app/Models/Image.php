@@ -15,4 +15,9 @@ class Image extends Model
     {
         return $this->belongsTo('App\Models\Bulletin');
     }
+
+    public function gallery()
+    {
+        return $this->belongsTo('App\Models\Gallery');
+    }
 }

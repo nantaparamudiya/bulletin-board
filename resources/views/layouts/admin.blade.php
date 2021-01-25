@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="{{ asset('plugin/bootstrap/bootstrap.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugin/font-awesome/font-awesome.min.css') }}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{{ asset('plugins/Ionicons/ionicons.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}">
     <!-- TMDR Preset -->
@@ -72,25 +70,24 @@
 
     <script>
       // BOOTSTRAP TOOLTIPS
-      if ($(window).width() > 767) {
-        $(function () {
-          $('[rel="tooltip"]').tooltip()
+      $(document).on('change', '.btn-file :file', function () {
+        var input = $(this),
+          numFiles = input.get(0).files ? input.get(0).files.length : 1,
+          label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
+      });
+
+      $(document).ready(function () {
+        $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+          var input = $(this).parents('.input-group').find(':text'),
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+          if (input.length) {
+            input.val(log);
+          } else {
+            if (log) alert(log);
+          }
         });
-      };
-
-      const checkAll = document.querySelector('#check-all');
-      const checkbox = document.querySelectorAll('input[type=checkbox]');
-
-      checkAll.addEventListener('change', () =>{
-        if (checkAll.checked === true) {
-          checkbox.forEach((e) =>{
-            e.checked = true;
-          });
-        } else {
-          checkbox.forEach((e) =>{
-            e.checked = false;
-          });
-        }
       });
     </script>
   </body>

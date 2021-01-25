@@ -7,6 +7,11 @@
           </a>
         </li>
         <li>
+          <a href="{{ route('gallery.create') }}"><i class="fa fa-photo"></i>
+            <span>Gallery</span>
+          </a>
+        </li>
+        <li>
           <a href="{{ route('admin.contact') }}"><i class="fa fa-envelope"></i>
             <span>Contact</span>
           </a>
