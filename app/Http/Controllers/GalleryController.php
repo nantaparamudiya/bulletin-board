@@ -16,7 +16,11 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        return view('gallery');
+        $galleries = Gallery::orderBy('id', 'desc')->paginate(10);
+
+        $render = function($image) { $this->renderImage($image); };
+
+        return \view('gallery', compact('galleries', 'render'));
     }
 
     /**
@@ -37,12 +41,20 @@ class GalleryController extends Controller
      */
     public function store(GalleryRequest $request)
     {
-        // $data = 
-        // if (! empty($request->image)) {
-        //     $imageController = new Image();
-        //     $image = $imageController->upload($request->image);
-        //     unset($request->image);
-        // }
+        $data = $request->validated();
+
+        if (! empty($data['image'])) {
+            $imageController = new Image();
+            $image = $imageController->upload($data['image']);
+            unset($data['image']);
+        } else {
+            $image = ['name' => null]; 
+        }
+
+        $gallery = Gallery::create($data);
+        $gallery->images()->create($image);
+
+        return \redirect()->back();
     }
 
     /**
@@ -53,7 +65,7 @@ class GalleryController extends Controller
      */
     public function show(Gallery $gallery)
     {
-        //
+        // 
     }
 
     /**
@@ -88,5 +100,10 @@ class GalleryController extends Controller
     public function destroy(Gallery $gallery)
     {
         //
+    }
+
+    protected function renderImage($image, $dimension = '245')
+    {
+        return asset('storage/images/' . $dimension . '/' . $image);
     }
 }

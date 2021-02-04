@@ -84,10 +84,23 @@
                         <div class="bordered-box mb-20">
                             <form action="{{ route('gallery.index') }}" method="post" enctype="multipart/form-data">
                                 @csrf
+
+                                {{--
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <a href="{{ url('locale/en') }}" ><i class="fa fa-language"></i> EN</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('locale/id') }}" ><i class="fa fa-language"></i> ID</a>
+                                    </li>
+                                </ul>
+                                --}}
+
                                 <table class="table table-no-border mb-0">
                                 <tbody>
                                     <tr>
-                                    <td width="150"><b>Title</b>
+                                    <td width="150">
+                                        <b>Title</b>
                                     </td>
                                     <td>
                                         <div class="form-group mb-0">

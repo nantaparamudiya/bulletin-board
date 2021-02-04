@@ -66,6 +66,12 @@
         <div class="text-center">
             <h1 class="text-green mb-30"><b>Gallery</b></h1>
         </div>
+        @foreach ($galleries as $gallery)
+          @foreach ($gallery->images as $image)
+          <!-- <img class="img-responsive" src="" alt=""> -->
+          {{ dd($render($image->name)) }}
+          @endforeach
+        @endforeach
       </div>
     </div>
   </main>
